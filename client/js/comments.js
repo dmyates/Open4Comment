@@ -31,7 +31,8 @@ $(".comment-button").click( function() {
     $.ajax({ url: "http://192.168.78.128:8888" + window.location.pathname + "post-comment/",
              type: 'POST',
              data: JSON.stringify({ username: $("#name-entry").html(),
-                                    comment: $("#comment-entry").html()
+                                    comment: $("#comment-entry").html(),
+                                    captcha: grecaptcha.getResponse()
                                  }),
              contentType: "application/json; charset=utf-8",
              datatype: "json",
@@ -39,4 +40,3 @@ $(".comment-button").click( function() {
              success: function(msg) { console.log("test"); fetch_comments(); }
     });
 });
-

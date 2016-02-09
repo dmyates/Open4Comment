@@ -18,12 +18,14 @@ var db = new sqlite3.Database(file);
 if (!exists)
     db.run("CREATE TABLE Comments (id INTEGER PRIMARY KEY AUTOINCREMENT, blog_post TEXT, username TEXT, comment TEXT, created DATETIME DEFAULT CURRENT_TIMESTAMP)");
 
-function save_comment(blog_post, username, comment)
+function save_comment(blog_post, username, comment, callback)
 {
     db.serialize(function() {
 
         //Insert this comment
-        db.run("INSERT INTO Comments (blog_post, username, comment) VALUES (?,?,?)", blog_post, username, comment);
+        db.run("INSERT INTO Comments (blog_post, username, comment) VALUES (?,?,?)", blog_post, username, comment, function() {
+            callback();
+        });
     });
 }
 

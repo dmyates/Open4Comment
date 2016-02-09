@@ -10,10 +10,13 @@ var path = require('path'),
     //DB
     db_file: path.join(__dirname, "/comments.db"),
 
+    //ReCAPTCHA
+    grec_secret: "",
+
     //Trips
     tripcodes: {
         hashing_alg: "md5",
-        salt: "salt"
+        salt: "fyouhacker"
     },
 
     //Server

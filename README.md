@@ -28,7 +28,7 @@ You're probably going to want to set up a reverse proxy for serving ghostchan co
 
 * Currently, ghostchan assumes (1) you only want comments on blog posts and (2) your post URLs include dates (as is the default setting in Ghost). It will break if you try anything else.
 * (Optional) rate limiting.
-* CAPTCHAs for posting.
+* Error messages for commenter.
 * Ghostchan should check if a post exists before saving comments for it.
 * Markdown formatting.
 * Comment moderation.
