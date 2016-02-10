@@ -1,24 +1,24 @@
 {
-  "name": "ghostchan",
+  "name": "Open4Comment",
   "version": "0.1.0",
-  "description": "Simple, imageboard-inspired commenting for Ghost.",
+  "description": "Simple, textboard-inspired commenting for your minimalist blog.",
   "author": "David Yates",
-  "homepage": "http://github.com/dmyates/ghostchan",
+  "homepage": "http://github.com/dmyates/Open4Comment",
   "keywords": [
-    "ghost-blog",
+    "blog",
     "chan",
     "comments"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/dmyates/ghostchan.git"
+    "url": "git://github.com/dmyates/Open4Comment.git"
   },
-  "bugs": "https://github.com/dmyates/ghostchan/issues",
-  "contributors": "https://github.com/dmyates/ghostchan/graphs/contributors",
+  "bugs": "https://github.com/dmyates/Open4Comment/issues",
+  "contributors": "https://github.com/dmyates/Open4Comment/graphs/contributors",
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://raw.github.com/dmyates/ghostchan/master/LICENSE"
+      "url": "https://raw.github.com/dmyates/Open4Comment/master/LICENSE"
     }
   ],
   "main": "main",
