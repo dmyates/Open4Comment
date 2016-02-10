@@ -11,16 +11,20 @@
 	background-color: #f3f3f3;
 }
 
-time.comment-time
+.comment-time
 {
-	float: right;
 	font-style: italic;
 	font-size: 0.9em;
-	display: inline-block;
-	margin-bottom: -1em;
+	display: inline;
 }
 
-div.comment-entry, div.comment-entry:focus
+.comment-id
+{
+	float: right;
+	font-size: 0.9em;
+}
+
+.comment-entry, .comment-entry:focus
 {
 	padding: 1px;
 	border: none;
@@ -30,10 +34,9 @@ div.comment-entry, div.comment-entry:focus
 	width: 100%;
 }
 
-div#name-entry, div.comment-poster
+#name-entry, .comment-poster
 {
 	font-weight: bold;
-	margin-bottom: 0.5em;
 }
 
 .tripcode
@@ -46,11 +49,12 @@ div#name-entry, div.comment-poster
 #name-entry br { display: none; }
 #name-entry * { display: inline; white-space: nowrap; }
 
-div#comment-entry
+#comment-entry
 {
 	display: block;
 	min-height: 5em;
 	height: auto;
+	margin-top: 4px;
 }
 
 .comment-button

@@ -31,7 +31,7 @@ function save_comment(blog_post, username, comment, callback)
 
 function list_comments(response, blog_post, callback)
 {
-    db.all("SELECT username, comment, created FROM Comments WHERE blog_post = ?", blog_post, function(err, rows) {
+    db.all("SELECT id, username, comment, created FROM Comments WHERE blog_post = ?", blog_post, function(err, rows) {
         callback(response, rows);
     });
 

@@ -4,6 +4,13 @@ var fs = require("fs"),
     config = require("./config"),
     persistence = require("./persistence");
 
+function contentEditable_encode(str)
+{
+    str = str.replace(/</g, "&lt;");
+    str = str.replace(/>/g, "&gt;");
+    return str;    
+}
+
 function route(pathname, request, query, post, response)
 {
 	console.log("About to route request for " + pathname);
@@ -42,9 +49,9 @@ function list_comments(pathname, request, query, response)
 function post_comment(pathname, request, post, response)
 {
     //Check comment isn't empty.
-    comment = post.comment
+    comment = contentEditable_encode(post.comment)
 
-    if (comment.length >= 0)
+    if (comment.length <= 0)
     {
         console.log("Didn't post -- comment to short");
         //Respond to request
@@ -53,20 +60,11 @@ function post_comment(pathname, request, post, response)
                                  });
         response.write("{ \"posted\": \"false\", \"error\": \"empty\" }");
         response.end();
+        return
     }
 
-
-    //Build username
-    if (post.username.indexOf('#') == -1)
-        username = post.username;
-    else //has tripcode
-    {
-        var username_arr = post.username.split("#"),
-            name = username_arr[0],
-            tripcode = crypto.createHash(config.tripcodes.hashing_alg).update(config.tripcodes.salt).update(username_arr[1]).digest('base64').slice(0, 10); 
-
-        username = name + "!" + tripcode;
-    }
+    //Username
+    username = contentEditable_encode(post.username)
 
     //Verify CAPTCHA
     console.log(JSON.stringify(post))
@@ -83,11 +81,43 @@ function post_comment(pathname, request, post, response)
     console.log(options)
 
     req(options, function(error, res, body) {
-        if (error) {
-            console.log('Failure:' + error);
-        }
-        if (JSON.parse(body).success == true)
+        if (error)
         {
+            console.log('Failure:' + error);
+            //Respond to request
+            response.writeHead(200, {"Content-Type": "application/json",
+                                     "Access-Control-Allow-Origin": config.blog_url
+                                     });
+            response.write("{ \"posted\": \"false\", \"error\": \"captcha-error\" }");
+            response.end();
+            return
+        }
+        console.log(body)
+        if (JSON.parse(body).success == true) //captcha correct
+        {
+            //Build username
+            username.replace("!", "")
+            if (username.length <= 0)
+            {
+                console.log("Username too short");
+                //Respond to request
+                response.writeHead(200, {"Content-Type": "application/json",
+                                         "Access-Control-Allow-Origin": config.blog_url
+                                         });
+                response.write("{ \"posted\": \"false\", \"error\": \"short-username\" }");
+                response.end();
+                return
+            }
+
+            if (username.indexOf('#') != -1) //has tripcode
+            {
+                var username_arr = username.split("#"),
+                    name = username_arr[0],
+                    tripcode = crypto.createHash(config.tripcodes.hashing_alg).update(config.tripcodes.salt).update(username_arr[1]).digest('base64').slice(0, 10); 
+
+                username = name + "!" + tripcode;
+            }
+
             //Post comment
             console.log("Posting:\n" + comment + "\n--" + username);
             persistence.save_comment(pathname.slice(0, -13), username, comment, function() {
@@ -99,7 +129,7 @@ function post_comment(pathname, request, post, response)
                 response.end();
             });
         }
-        else
+        else //captcha incorrect
         {
             console.log("Didn't post -- no captcha");
             //Respond to request

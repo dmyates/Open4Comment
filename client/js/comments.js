@@ -1,4 +1,9 @@
+
 // Fetch and post comments
+
+var anchorify = function(comment) { //parse out post links
+    return comment.replace(/(&gt;&gt;&gt;([0-9]+))/g, '<a href="#post$2">$1<\/a>');
+}
 
 //Fetch comments
 var fetch_comments = function() {
@@ -13,9 +18,12 @@ var fetch_comments = function() {
                     username = username_arr[0] + "<span class=\"tripcode\">!" + username_arr[1] + "</span>"
             }
             $(".comment-listing").append("<div class='comment'>" +
-                          "<time class='comment-time'>" + comment.created + "</time>" +
-                          "<div class='comment-poster'>" + username + "</div>" +
-                          "<div class='comment-content'>" + comment.comment + "</div>" +
+                          "<div class='comment-id'><a name='post"+ comment.id + "'>" + comment.id + "</a></div>" +
+                          "<div class='post-header'>" +
+                              "<span class='comment-poster'>" + username + "</span>" +
+                              "<span class='comment-time'> " + comment.created + "</span>" +
+                          "</div>" +
+                          "<div class='comment-content'>" + anchorify(comment.comment) + "</div>" +
                           "</div>");
         });
     });
