@@ -16,18 +16,13 @@ function route(pathname, request, query, post, response)
 	console.log("About to route request for " + pathname);
 	switch (true)
 	{
-        case /\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/.+\/post\-comment\//.test(pathname):
+        case /\/.+\/post\-comment\//.test(pathname):
 			post_comment(pathname, request, post, response);
 			break;	
 
-        case /\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/.+\//.test(pathname):
+        default:
 			list_comments(pathname, request, query, response);
 			break;	
-
-        default:
-            console.log("404!");
-            display_404(pathname, request, response);
-            break;
 	}
 }
 

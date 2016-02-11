@@ -9,6 +9,8 @@
 	border: 1px solid #ddd;
 	font-family: "Noto Sans";
 	background-color: #f3f3f3;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 .comment-time
@@ -55,6 +57,7 @@
 	min-height: 5em;
 	height: auto;
 	margin-top: 4px;
+	white-space: pre-wrap;
 }
 
 .comment-button
