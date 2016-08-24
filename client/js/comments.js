@@ -9,7 +9,7 @@ var parse_comment = function(comment) {
 //Fetch comments
 var fetch_comments = function() {
     $(".comment-listing").empty();
-    $.getJSON("http://192.168.78.128:8888" + window.location.pathname, function(data) {
+    $.getJSON("http://localhost:8888" + window.location.pathname, function(data) {
         $.each(data, function(n,comment) {
             if (comment.username.indexOf("!") == -1)
                 username = comment.username;
@@ -39,27 +39,27 @@ var fetch_comments = function() {
 $(document).ready( function() {
     // Fetch comments
     fetch_comments();
+	// Post comment
+	$(".comment-button").click( function() {
+		var entry = $("#comment-entry");
+		var text = entry.html();
+		entry.html(text.replace(/<br>/g, "\\n")); // preserve linebreaks
+
+		$.ajax({ url: "http://localhost:8888" + window.location.pathname + "post-comment/",
+				 type: 'POST',
+				 data: JSON.stringify({ username: $("#name-entry").text(),
+										comment: $("#comment-entry").text(),
+										captcha: grecaptcha.getResponse()
+									 }),
+				 contentType: "application/json; charset=utf-8",
+				 datatype: "json",
+				 async: "false",
+				 success: function(msg) { fetch_comments(); }
+		});
+		//Clear up posting box
+		grecaptcha.reset();
+		$("#comment-entry").empty();
+	});
 });
 
-// Post comment
-$(".comment-button").click( function() {
-    var entry = $("#comment-entry");
-    var text = entry.html();
-    entry.html(text.replace(/<br>/g, "\\n")); // preserve linebreaks
-
-    $.ajax({ url: "http://192.168.78.128:8888" + window.location.pathname + "post-comment/",
-             type: 'POST',
-             data: JSON.stringify({ username: $("#name-entry").text(),
-                                    comment: $("#comment-entry").text(),
-                                    captcha: grecaptcha.getResponse()
-                                 }),
-             contentType: "application/json; charset=utf-8",
-             datatype: "json",
-             async: "false",
-             success: function(msg) { fetch_comments(); }
-    });
-    //Clear up posting box
-    grecaptcha.reset();
-    $("#comment-entry").empty();
-});
 

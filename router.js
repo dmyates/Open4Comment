@@ -44,6 +44,7 @@ function list_comments(pathname, request, query, response)
 function post_comment(pathname, request, post, response)
 {
     //Check comment isn't empty.
+	console.log("Received new comment!")
     comment = contentEditable_encode(post.comment)
 
     if (comment.length <= 0)
@@ -66,7 +67,7 @@ function post_comment(pathname, request, post, response)
     var cbody = { 
                   secret: config.grec_secret,
                   response: post.captcha,
-                  remoteip: request.connection.remoteAddress
+                  remoteip: request.connection.remoteAddress.replace(/^.*:/, '')
         },
         options = {
                     method: "POST",
