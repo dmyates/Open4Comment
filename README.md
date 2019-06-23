@@ -1,5 +1,7 @@
 # Open4Comment
 
+**This project is abandoned. The code is janky, the architecture suspect, and if you touch it wrong it'll spit XSS at you. It was a neat idea, but for various reasons, I will probably not return to it.**
+
 No frills commenting for the your minimalist blog. Like a self-hosted Disqus without all the cruft. Not quite ready for production usage, but getting there.
 
 ## Features
